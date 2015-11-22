@@ -1,4 +1,4 @@
-"{{{Auto Commands
+" Auto comands
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
@@ -32,9 +32,7 @@ autocmd BufWinEnter *
 \ endif
 augroup END
 
-"}}}
-
-"{{{Misc Settings
+" Misc Settings
 
 " Necesary  for lots of cool vim things
 set nocompatible
@@ -109,9 +107,9 @@ set nohidden
 
 " Set off the other paren
 highlight MatchParen ctermbg=4
-" }}}
 
-"{{{Look and Feel
+
+" Look and Feel
 
 " Favorite Color Scheme
 if has("gui_running")
@@ -128,11 +126,9 @@ endif
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
-" }}}
+" Functions
 
-"{{{ Functions
-
-"{{{ Open URL in browser
+" Open URL in browser
 
 function! Browser ()
         let line = getline (".")
@@ -140,9 +136,7 @@ function! Browser ()
         exec "!konqueror ".line
         endfunction
 
-        "}}}
-
-        "{{{Theme Rotating
+        " Theme Rotating
         let themeindex=0
 function! RotateColorTheme()
         let y = -1
@@ -159,9 +153,8 @@ let themestring = strpart(colorstring, x + 1, y - x - 1)
         endif
         endwhile
         endfunction
-        " }}}
 
-        "{{{ Paste Toggle
+        " Paste Toggle
         let paste_mode = 0 " 0 = normal, 1 = paste
 
 func! Paste_on_off()
@@ -174,9 +167,9 @@ func! Paste_on_off()
         endif
         return
         endfunc
-        "}}}
 
-        "{{{ Todo List Mode
+
+        " Todo List Mode
 
 function! TodoListMode()
         e ~/.todo.otl
@@ -188,11 +181,8 @@ function! TodoListMode()
         " or 'norm! zMzr'
         endfunction
 
-        "}}}
 
-        "}}}
-
-        "{{{ Mappings
+        " Mappings
 
         " Open Url on this line with the browser \w
         map <Leader>w :call Browser ()<CR>
@@ -272,15 +262,14 @@ function! TodoListMode()
 
         "ly$O#{{{ "lpjjj_%A#}}}jjzajj
 
-        "}}}
 
-        "{{{Taglist configuration
+        " Taglist configuration
         let Tlist_Use_Right_Window = 1
         let Tlist_Enable_Fold_Column = 0
         let Tlist_Exit_OnlyWindow = 1
         let Tlist_Use_SingleClick = 1
         let Tlist_Inc_Winwidth = 0
-        "}}}
+
 
         let g:rct_completion_use_fri = 1
         "let g:Tex_DefaultTargetFormat = "pdf"
