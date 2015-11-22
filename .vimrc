@@ -34,6 +34,28 @@ augroup END
 
 " Misc Settings
 
+" puts insert message at bottom of screen when inserting
+set showmode
+
+autocmd FileType cpp,h,javascript,css,php,rb,py set textwidth=79
+
+" redefine ^J ^H ^K ^L to move between windows (used w/split screens)
+nn ^K ^Wk
+nn ^H ^Wh
+nn ^L ^Wl
+nn <C-J> ^Wj
+
+" define F2 to insert
+"   #include <iostream>
+"   using namespace std;
+"
+"   int main()
+"     X starts in insert mode here
+"   }
+map #2 i#include <iostream>^Musing namespace std;^M^Mint main()^M{^M^M}^[ki
+
+map #3 i#!/usr/bin/env ruby^M^M
+
 " Necesary  for lots of cool vim things
 set nocompatible
 
@@ -55,6 +77,9 @@ set autoindent
 " Spaces are better than a tab character
 set expandtab
 set smarttab
+
+" Show the cursor position all the time
+set ruler
 
 " Who wants an 8 character tab?  Not me!
 set shiftwidth=3
