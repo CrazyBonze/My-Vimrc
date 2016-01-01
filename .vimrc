@@ -82,8 +82,8 @@ set smarttab
 set ruler
 
 " Who wants an 8 character tab?  Not me!
-set shiftwidth=3
-set softtabstop=3
+set shiftwidth=2
+set softtabstop=2
 
 " Use english for spellchecking, but don't spellcheck by default
 if version >= 700
