@@ -1,3 +1,6 @@
+" Tell vim to keep a backup file
+set backup
+
 " Move temp files
 set directory-=$HOME/tmp
 set directory^=$HOME/tmp//
@@ -46,9 +49,9 @@ let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
+        set pastetoggle=<Esc>[201~
+        set paste
+        return ""
 endfunction
 
 " redefine ^J ^H ^K ^L to move between windows (used w/split screens)
@@ -82,6 +85,9 @@ set wildmode=list:longest,full
 " Enable mouse support in console
 set mouse=a
 
+" Use system clipboard
+set clipboard=unnamedplus
+
 " Got backspace?
 set backspace=2
 
@@ -104,9 +110,6 @@ set incsearch
 " Highlight things that we find with the search
 " figure out a good way to clear this
 set hlsearch
-
-" Since I use linux, I want this
-let g:clipbrdDefaultReg = '+'
 
 "Status line gnarliness
 set laststatus=2
