@@ -7,6 +7,10 @@ set directory^=$HOME/tmp//
 set backupdir-=$HOME/tmp
 set backupdir^=$HOME/tmp//
 
+" Fixes color issue when vim is used in tmux
+" https://unix.stackexchange.com/a/363374
+set background=dark
+
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
