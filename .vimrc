@@ -1,10 +1,116 @@
-" Auto comands
+" Move temp files
+set directory-=$HOME/tmp
+set directory^=$HOME/tmp//
+set backupdir-=$HOME/tmp
+set backupdir^=$HOME/tmp//
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+
+" puts insert message at bottom of screen when inserting
+set showmode
+
+autocmd FileType cpp,h,javascript,css,php,rb,py set textwidth=79
+au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+highlight BadWhitespace ctermbg=red guibg=red
+au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
+au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
+au BufRead,BufNewFile *.py,*.pyw set expandtab
+au BufRead,BufNewFile *.py set softtabstop=4
+
+filetype plugin indent on    " required
+" Needed for Syntax Highlighting and stuff
+filetype on
+filetype plugin on
+syntax enable
+set grepprg=grep\ -nH\ $*
+
+" Who doesn't like autoindent?
+set autoindent
+
+" Spaces are better than a tab character
+set expandtab
+set smarttab
+
+" Show the cursor position all the time
+set ruler
+
+" Fix the auto indent issue when pasting
+" https://gitlab.com/gnachman/iterm2/-/wikis/Paste-Bracketing
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+" redefine ^J ^H ^K ^L to move between windows (used w/split screens)
+nn ^K ^Wk
+nn ^H ^Wh
+nn ^L ^Wl
+nn <C-J> ^Wj
+
+" Swap ; and :  Convenient.
+nnoremap ; :
+nnoremap : ;
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+map N Nzz
+map n nzz
+
+" Necesary  for lots of cool vim things
+set nocompatible
+
+" This shows what you are typing as a command.
+set showcmd
+
+" Folding Stuffs
+set foldmethod=marker
+
+" Cool tab completion stuff
+set wildmenu
+set wildmode=list:longest,full
+
+" Enable mouse support in console
+set mouse=a
+
+" Got backspace?
+set backspace=2
+
+" Line Numbers PWN!
+set number
+
+" Ignoring case is a fun trick
+set ignorecase
+
+" And so is Artificial Intellegence!
+set smartcase
+
+" This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
+inoremap jj <Esc>
+nnoremap JJJJ <Nop>
+
+" Incremental searching is sexy
+set incsearch
+
+" Highlight things that we find with the search
+" figure out a good way to clear this
+set hlsearch
+
+" Since I use linux, I want this
+let g:clipbrdDefaultReg = '+'
+
+"Status line gnarliness
+set laststatus=2
+set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 " Restore cursor position to where it was before
 augroup JumpCursorOnEdit
@@ -31,274 +137,3 @@ autocmd BufWinEnter *
 \   unlet b:doopenfold |
 \ endif
 augroup END
-
-" Misc Settings
-
-" puts insert message at bottom of screen when inserting
-set showmode
-
-autocmd FileType cpp,h,javascript,css,php,rb,py set textwidth=79
-
-" redefine ^J ^H ^K ^L to move between windows (used w/split screens)
-nn ^K ^Wk
-nn ^H ^Wh
-nn ^L ^Wl
-nn <C-J> ^Wj
-
-" define F2 to insert
-"   #include <iostream>
-"   using namespace std;
-"
-"   int main()
-"     X starts in insert mode here
-"   }
-map #2 i#include <iostream>^Musing namespace std;^M^Mint main()^M{^M^M}^[ki
-
-map #3 i#!/usr/bin/env ruby^M^M
-
-" Necesary  for lots of cool vim things
-set nocompatible
-
-" This shows what you are typing as a command.  I love this!
-set showcmd
-
-" Folding Stuffs
-set foldmethod=marker
-
-" Needed for Syntax Highlighting and stuff
-filetype on
-filetype plugin on
-syntax enable
-set grepprg=grep\ -nH\ $*
-
-" Who doesn't like autoindent?
-set autoindent
-
-" Spaces are better than a tab character
-set expandtab
-set smarttab
-
-" Show the cursor position all the time
-set ruler
-
-" Who wants an 8 character tab?  Not me!
-set shiftwidth=2
-set softtabstop=2
-
-" Use english for spellchecking, but don't spellcheck by default
-if version >= 700
-set spl=en spell
-set nospell
-endif
-
-" Real men use gcc
-"compiler gcc
-
-" Cool tab completion stuff
-set wildmenu
-set wildmode=list:longest,full
-
-" Enable mouse support in console
-set mouse=a
-
-" Got backspace?
-set backspace=2
-
-" Line Numbers PWN!
-set number
-
-" Ignoring case is a fun trick
-set ignorecase
-
-" And so is Artificial Intellegence!
-set smartcase
-
-" This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
-inoremap jj <Esc>
-
-nnoremap JJJJ <Nop>
-
-" Incremental searching is sexy
-set incsearch
-
-" Highlight things that we find with the search
-set hlsearch
-
-" Since I use linux, I want this
-let g:clipbrdDefaultReg = '+'
-
-" When I close a tab, remove the buffer
-set nohidden
-
-" Set off the other paren
-highlight MatchParen ctermbg=4
-
-
-" Look and Feel
-
-" Favorite Color Scheme
-if has("gui_running")
-colorscheme inkpot
-" Remove Toolbar
-set guioptions-=T
-"Terminus is AWESOME
-set guifont=Terminus\ 9
-"else
-"colorscheme metacosm
-endif
-
-"Status line gnarliness
-set laststatus=2
-set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
-
-" Functions
-
-" Open URL in browser
-
-function! Browser ()
-        let line = getline (".")
-        let line = matchstr (line, "http[^   ]*")
-        exec "!konqueror ".line
-        endfunction
-
-        " Theme Rotating
-        let themeindex=0
-function! RotateColorTheme()
-        let y = -1
-        while y == -1
-        let colorstring = "inkpot#ron#blue#elflord#evening#koehler#murphy#pablo#desert#torte#"
-        let x = match( colorstring, "#", g:themeindex )
-        let y = match( colorstring, "#", x + 1 )
-        let g:themeindex = x + 1
-        if y == -1
-        let g:themeindex = 0
-        else
-let themestring = strpart(colorstring, x + 1, y - x - 1)
-        return ":colorscheme ".themestring
-        endif
-        endwhile
-        endfunction
-
-        " Paste Toggle
-        let paste_mode = 0 " 0 = normal, 1 = paste
-
-func! Paste_on_off()
-        if g:paste_mode == 0
-        set paste
-        let g:paste_mode = 1
-        else
-        set nopaste
-        let g:paste_mode = 0
-        endif
-        return
-        endfunc
-
-
-        " Todo List Mode
-
-function! TodoListMode()
-        e ~/.todo.otl
-        Calendar
-        wincmd l
-        set foldlevel=1
-        tabnew ~/.notes.txt
-        tabfirst
-        " or 'norm! zMzr'
-        endfunction
-
-
-        " Mappings
-
-        " Open Url on this line with the browser \w
-        map <Leader>w :call Browser ()<CR>
-
-        " Open the Project Plugin <F2>
-        nnoremap <silent> <F2> :Project<CR>
-
-        " Open the Project Plugin
-        nnoremap <silent> <Leader>pal  :Project .vimproject<CR>
-
-        " TODO Mode
-        nnoremap <silent> <Leader>todo :execute TodoListMode()<CR>
-
-        " Open the TagList Plugin <F3>
-        nnoremap <silent> <F3> :Tlist<CR>
-
-        " Next Tab
-        nnoremap <silent> <C-Right> :tabnext<CR>
-
-        " Previous Tab
-        nnoremap <silent> <C-Left> :tabprevious<CR>
-
-        " New Tab
-        nnoremap <silent> <C-t> :tabnew<CR>
-
-        " Rotate Color Scheme <F8>
-        nnoremap <silent> <F8> :execute RotateColorTheme()<CR>
-
-        " DOS is for fools.
-        nnoremap <silent> <F9> :%s/$//g<CR>:%s// /g<CR>
-
-        " Paste Mode!  Dang! <F10>
-        nnoremap <silent> <F10> :call Paste_on_off()<CR>
-        set pastetoggle=<F10>
-
-        " Edit vimrc \ev
-        nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
-
-        " Edit gvimrc \gv
-        nnoremap <silent> <Leader>gv :tabnew<CR>:e ~/.gvimrc<CR>
-
-        " Up and down are more logical with g..
-        nnoremap <silent> k gk
-        nnoremap <silent> j gj
-        inoremap <silent> <Up> <Esc>gka
-        inoremap <silent> <Down> <Esc>gja
-
-        " Good call Benjie (r for i)
-        nnoremap <silent> <Home> i <Esc>r
-        nnoremap <silent> <End> a <Esc>r
-
-        " Create Blank Newlines and stay in Normal mode
-        nnoremap <silent> zj o<Esc>
-        nnoremap <silent> zk O<Esc>
-
-        " Space will toggle folds!
-        nnoremap <space> za
-
-        " Search mappings: These will make it so that going to the next one in a
-        " search will center on the line it's found in.
-        map N Nzz
-        map n nzz
-
-        " Testing
-        set completeopt=longest,menuone,preview
-
-        inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
-        inoremap <expr> <c-n> pumvisible() ? "\<lt>c-n>" : "\<lt>c-n>\<lt>c-r>=pumvisible() ? \"\\<lt>down>\" : \"\"\<lt>cr>"
-        inoremap <expr> <m-;> pumvisible() ? "\<lt>c-n>" : "\<lt>c-x>\<lt>c-o>\<lt>c-n>\<lt>c-p>\<lt>c-r>=pumvisible() ? \"\\<lt>down>\" : \"\"\<lt>cr>"
-
-        " Swap ; and :  Convenient.
-        nnoremap ; :
-        nnoremap : ;
-
-        " Fix email paragraphs
-        nnoremap <leader>par :%s/^>$//<CR>
-
-        "ly$O#{{{ "lpjjj_%A#}}}jjzajj
-
-
-        " Taglist configuration
-        let Tlist_Use_Right_Window = 1
-        let Tlist_Enable_Fold_Column = 0
-        let Tlist_Exit_OnlyWindow = 1
-        let Tlist_Use_SingleClick = 1
-        let Tlist_Inc_Winwidth = 0
-
-
-        let g:rct_completion_use_fri = 1
-        "let g:Tex_DefaultTargetFormat = "pdf"
-        let g:Tex_ViewRule_pdf = "kpdf"
-
-        filetype plugin indent on
-        syntax on
