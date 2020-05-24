@@ -44,5 +44,6 @@ else
         mv "$TMP_TMUX" "$TMUX"
 fi
 
+mkdir "$HOME/tmp"
 rm -rf "$TMPDIR"
 
